@@ -1,0 +1,67 @@
+# Train/val/test sets as 1) dir: path/to/imgs, 2) file: path/to/imgs.txt, or 3) list: [path/to/imgs1, path/to/imgs2, ..]
+path: /scratch.global/chen8111/datasets/ta1_synthetic # dataset root dir
+train: /scratch.global/chen8111/datasets/ta1_synthetic/images/train # train images
+val: /scratch.global/chen8111/datasets/ta1_synthetic/images/val # val images 
+test: # test images (optional)
+
+# Classes
+names:
+  0: arrow
+  1: arrow_circle
+  2: arrow_num
+  3: asterix
+  4: barbeque_tofu
+  5: barbeque_tofu_hollow
+  6: blue_arrow_kite
+  7: button
+  8: button2
+  9: c_dot
+  10: christmas_tree
+  11: christmas_jingle_bell
+  12: circle
+  13: circle_info
+  14: crossed_downward_arrows
+  15: diamond_words
+  16: dot
+  17: fan
+  18: fault_line_triangle_hollow_num
+  19: fault_line_triangle_num
+  20: gear
+  21: gear_2
+  22: hollow_arrow
+  23: inclined_cleavage
+  24: inclined_line_box_hollow_num
+  25: inclined_line_box_num
+  26: line_diamond_center
+  27: line_diamond_center_solid
+  28: misc1
+  29: misc2
+  30: misc4
+  31: misc5
+  32: misc6
+  33: misc7
+  34: misc8
+  35: plus
+  36: plus2
+  37: plus_lollipop
+  38: purple_arrow_kite
+  39: quarry_open_pit
+  40: quarry_open_pit_U
+  41: reverse_p_num
+  42: reverse_p_num_dot
+  43: sleeping_y
+  44: small_inclined_fault_num
+  45: small_inclined_fault_num_2
+  46: small_inclined_fault_num_dot
+  47: solid_colored_circle
+  48: target
+  49: triangle
+  50: triangular_matrix
+  51: vertical_cleavage
+  52: vertical_cleavage_num
+  53: weight_lift
+  54: x
+
+
+# Download script/URL (optional)
+
