@@ -21,23 +21,49 @@ PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0
 # # Resume training
 # results = model.train(resume=True)
 
-folder_path = "/scratch.global/chen8111/Darpa/eval_data_perfomer" #path of a list of prediction maps
-legend_path = "/scratch.global/chen8111/Darpa/Cropped_legend"
-cropped_path = legend_path + "/ValLabels"  #path to save the cropped legend
-processed_legend_path = legend_path + "/ValLabels_processed"  #path to save the preprocessing cropped legend
-sqaure_legend_path = legend_path + "/square_labels" #path to save the square preprocessing cropped legend
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Parse all the required paths.")
+
+    parser.add_argument('--rawmap_path', type=str, default="/Users/dong_dong_dong/Downloads/Darpa/eval/eval_data_perfomer",
+                        help='Path of a list of prediction maps')
+    parser.add_argument('--main_path', type=str, default="/Users/dong_dong_dong/Downloads/Darpa/fewshot",
+                        help='Main path for the project')
+    parser.add_argument('--generated_meta_info', type=str, default='/Users/dong_dong_dong/Downloads/Darpa/legend_item_description_outputs/evaluation',
+                        help='Path to the generated metainfo contains map area coordinates')
+    parser.add_argument('--sythentic_data_output_path', type=str, default='/Users/dong_dong_dong/Downloads/Darpa/fewshot/sythentic_pred',
+                        help='Path to the generated synthetic data')
+    parser.add_argument('--map_patch_output_dir', type=str, default='/Users/dong_dong_dong/Downloads/Darpa/cropped_maps',
+                        help='Directory for cropped map patch outputs')
+    parser.add_argument('--predict_output_dir', type=str, default='/Users/dong_dong_dong/Downloads/Darpa/cropped_maps',
+                        help='Directory for prediction outputs')
+    parser.add_argument('--final_output_dir_root', type=str, default='/Users/dong_dong_dong/Downloads/Darpa/fewshot',
+                        help='Root directory for final outputs')
+    parser.add_argument('--baseline_model_path', type=str, default='/Users/dong_dong_dong/Downloads/Darpa/fewshot/runs/detect/train/weights/best.pt',
+                        help='Path to the baseline model weights')
+
+    args = parser.parse_args()
+
+    return args
+
+args = parse_arguments()
+
+folder_path = args.rawmap_path
+main_path = args.main_path
+generated_meta_info = args.generated_meta_info
+sythentic_data_path = args.sythentic_data_output_path
+map_patch_output_dir = args.map_patch_output_dir
+predict_output_dir = args.predict_output_dir
+final_output_dir_root = args.final_output_dir_root
+baseline_model_path = args.baseline_model_path
+
+legend_path = os.path.join(main_path, 'Cropped_legend')
+cropped_path = os.path.join(legend_path, 'ValLabels')
+processed_legend_path = os.path.join(legend_path, 'ValLabels_processed')
+sqaure_legend_path = os.path.join(legend_path, 'square_labels')
+
 os.makedirs(cropped_path, exist_ok=True)
 os.makedirs(processed_legend_path, exist_ok=True)
 os.makedirs(sqaure_legend_path, exist_ok=True)
-
-generated_meta_info = '/scratch.global/chen8111/Darpa/legend_item_description_outputs/evaluation'  #path to the generated metainfo contains map area coordinates
-sythentic_data_path = '/scratch.global/chen8111/Darpa/sythentic_pred'  #path to the map based training and validation result as well as the model weight
-map_patch_output_dir = '/scratch.global/chen8111/Darpa/cropped_maps' #path to the predicted map patches. It has to be formatted as cropped_maps/{mapname}/{mapname_ptname}.png
-
-map_tif_dir = '/scratch.global/chen8111/Darpa/train/train_input' #path of a list of training maps
-map_mask_dir = '/scratch.global/chen8111/Darpa/train/intermediate6/cropped_map_mask' #path of map mask(uploaded)
-
-baseline_model_path = '/home/jusun/chen8111/ondemand/Darpa/runs/detect/train/weights/best.pt' #path of baseline model
 
 def create_yaml_format_folder(root):
     # Remove all contents of synthetic_pred directory, if it exists
@@ -75,9 +101,11 @@ def create_yaml_format_folder(root):
 
     print(f"Directories created in {root}: images (train, test, val) and labels (train, test, val)")
 
-crop_legned(folder_path, cropped_path)
-target_color = [255, 255, 255]
-clean_background_and_remove_text(cropped_path, processed_legend_path, target_color, threshold=50, crop=False, use_gpu=False)
+# crop_legned(folder_path, cropped_path)
+# target_color = [255, 255, 255]
+# clean_background_and_remove_text(cropped_path, processed_path, target_color, threshold=50, crop=False, use_gpu=False)
+
+
 
 # crop prediction maps to get the patches
 # for img_name in os.listdir(folder_path):
@@ -159,7 +187,7 @@ for square_map in os.listdir(sqaure_legend_path):
                 index_dict[index] = pt_name
                 max_num_synthetic_images = 1
                 print(cur_legend)
-                generate_sythentic_data(cur_legend, index, SYMBOL_BASE_SIZE, sythentic_data_path, max_num_synthetic_images, map_tif_dir, map_mask_dir)
+                generate_sythentic_data(cur_legend, index, SYMBOL_BASE_SIZE, sythentic_data_path, max_num_synthetic_images)
 
                 index_name_dict[index] = pt_name
                 cur_legend_info_path = os.path.join(sythentic_data_path, 'point_synthetic_maps',str(index))
@@ -243,3 +271,5 @@ for square_map in os.listdir(sqaure_legend_path):
         results = model.train(data=yaml_file_path, epochs=20, imgsz=1024, device='0')
 
         # index += 1
+        fewshot_prediction(model_weights_dir, folder_path, map_patch_output_dir, predict_output_dir, final_output_dir_root)
+
