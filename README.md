@@ -36,6 +36,8 @@ The script needs the following arguments:
 
 - `--rawmap_path`: Path of a list of prediction maps.
 - `--main_path`: Main path for the project.
+- `--map_tif_dir`: Path of a list of addition maps for generate synthetic points maps.
+- `--map_mask_dir`: Path of related map mask for generate synthetic points maps.
 - `--generated_meta_info`: Path to the generated metainfo that contains map area coordinates.
 - `--sythentic_data_output_path`: Path to the generated synthetic data.
 - `--map_patch_output_dir`: Directory for cropped map patch outputs.
