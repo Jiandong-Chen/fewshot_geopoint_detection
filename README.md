@@ -27,7 +27,7 @@ Package Versions:
 
 Usage
 -----
-To run the script, navigate to the directory containing the main.py script and execute it using Python
+To run the script, navigate to the directory containing the `main.py` script and execute it using Python
 
 
 Arguments
