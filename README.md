@@ -14,16 +14,16 @@ Installation
 ------------
 Python Version: 3.12
 
-Package Version:
-ultralytics 8.2.23
-pillow 10.3.0
-opencv-python 4.9.0.80
-yaml 0.2.5
-matplotlib 3.9.0
-pandas 2.2.2
-numpy 1.26.4
-geojson 3.1.0
-logging 0.4.9.6
+Package Versions:
+- ultralytics 8.2.23
+- pillow 10.3.0
+- opencv-python 4.9.0.80
+- yaml 0.2.5
+- matplotlib 3.9.0
+- pandas 2.2.2
+- numpy 1.26.4
+- geojson 3.1.0
+- logging 0.4.9.6
 
 Usage
 -----
