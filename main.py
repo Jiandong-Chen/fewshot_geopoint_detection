@@ -5,6 +5,7 @@ from generate_sythentic_data import generate_sythentic_data
 import random
 import shutil
 import yaml
+import argparse
 from map2patch import crop_map_main
 
 PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0
@@ -28,6 +29,10 @@ def parse_arguments():
                         help='Path of a list of prediction maps')
     parser.add_argument('--main_path', type=str, default="/Users/dong_dong_dong/Downloads/Darpa/fewshot",
                         help='Main path for the project')
+    parser.add_argument('--map_tif_dir', type=str, default="/Users/dong_dong_dong/Downloads/Darpa/train/train_input",
+                        help='Path of a list of addition maps for generate synthetic points maps')
+    parser.add_argument('--map_mask_dir', type=str, default="/Users/dong_dong_dong/Downloads/Darpa/train/intermediate6/cropped_map_mask",
+                        help='Path of related map mask for generate synthetic points maps')
     parser.add_argument('--generated_meta_info', type=str, default='/Users/dong_dong_dong/Downloads/Darpa/legend_item_description_outputs/evaluation',
                         help='Path to the generated metainfo contains map area coordinates')
     parser.add_argument('--sythentic_data_output_path', type=str, default='/Users/dong_dong_dong/Downloads/Darpa/fewshot/sythentic_pred',
@@ -49,6 +54,8 @@ args = parse_arguments()
 
 folder_path = args.rawmap_path
 main_path = args.main_path
+map_tif_dir = args.map_tif_dir
+map_mask_dir = args.map_mask_dir
 generated_meta_info = args.generated_meta_info
 sythentic_data_path = args.sythentic_data_output_path
 map_patch_output_dir = args.map_patch_output_dir
@@ -187,7 +194,7 @@ for square_map in os.listdir(sqaure_legend_path):
                 index_dict[index] = pt_name
                 max_num_synthetic_images = 1
                 print(cur_legend)
-                generate_sythentic_data(cur_legend, index, SYMBOL_BASE_SIZE, sythentic_data_path, max_num_synthetic_images)
+                generate_sythentic_data(cur_legend, index, SYMBOL_BASE_SIZE, sythentic_data_path, max_num_synthetic_images, map_tif_dir, map_mask_dir)
 
                 index_name_dict[index] = pt_name
                 cur_legend_info_path = os.path.join(sythentic_data_path, 'point_synthetic_maps',str(index))
