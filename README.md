@@ -1,7 +1,7 @@
 # Fewshot Point Detection
 ========================
 
-This project involves a script for parsing various paths required for a few-shot point detection task. The script uses the `argparse` library to handle input arguments for different file paths and directories.
+This project developed an automatic pipeline for geo point symbol detection. A baseline model, yolov8n.pt, was trained on the competition training maps as well as synthetic point symbols. The entire competition validation dataset was used as the validation set. The pipeline performs few-shot detection by continuing train on the baseline model, generating a model for each prediction map using the synthetic point symbols in the map. This specifically trained model is then used to make predictions for the map.
 
 Table of Contents
 -----------------
@@ -9,20 +9,30 @@ Table of Contents
 - [Usage](#usage)
 - [Arguments](#arguments)
 - [Contributing](#contributing)
-- [License](#license)
 
 Installation
 ------------
-To use this script, you need to have Python installed on your machine. Additionally, make sure to install the `argparse` module, although it is included in the standard library for Python versions 2.7 and 3.2 and above.
+Python Version: 3.12
+
+Package Version:
+ultralytics 8.2.23
+pillow 10.3.0
+opencv-python 4.9.0.80
+yaml 0.2.5
+matplotlib 3.9.0
+pandas 2.2.2
+numpy 1.26.4
+geojson 3.1.0
+logging 0.4.9.6
 
 Usage
 -----
-To run the script, navigate to the directory containing the script and execute it using Python:
+To run the script, navigate to the directory containing the main.py script and execute it using Python
 
 
 Arguments
 ---------
-The script accepts the following arguments:
+The script needs the following arguments:
 
 - `--rawmap_path`: Path of a list of prediction maps.
 - `--main_path`: Main path for the project.
@@ -37,7 +47,4 @@ Contributing
 ------------
 If you would like to contribute to this project, please fork the repository and submit a pull request. We welcome all contributions.
 
-License
--------
-This project is licensed under the MIT License. See the LICENSE file for details.
 
